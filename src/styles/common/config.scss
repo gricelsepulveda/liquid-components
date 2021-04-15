@@ -1,40 +1,11 @@
-$sm: "(max-width: 991px)";
+@import './vars';
+@import './mixins';
 
-//Sizes
-@mixin sizes($prop, $propAlias, $unit, $unitAlias, $min, $max, $increment){
-    @for $i from $min through $max {
-        .lq-#{$propAlias}-#{$i * $increment}#{$unitAlias}{ 
-            #{$prop}: #{$i * $increment}#{$unit};
-            min-#{$prop}: #{$i * $increment}#{$unit};
-            max-#{$prop}: #{$i * $increment}#{$unit};
-        }
-    }
-}
-
-//Radius
-@mixin radius($lgRadius, $smRadius){
-    @each $lgRadiusVal in $lgRadius {
-        $lgRadiusAlias:index($lgRadius, $lgRadiusVal);
-        $smRadiusVal:nth($smRadius, $lgRadiusAlias);
-        .lq-radius-#{$lgRadiusAlias}{ 
-            border-radius: #{$lgRadiusVal}px;
-            @media #{$sm}{
-                border-radius: #{$smRadiusVal}px;
-            }
-        }
-    }
-}
-
-//Generate widths
-@include sizes('width', 'w', '%', 'per', 1, 20, 5);
-@include sizes('width', 'w', 'px', 'pix', 1, 200, 5);
-
-//Generate heights
-@include sizes('height', 'h', '%', 'per', 1, 20, 5);
-@include sizes('height', 'h', 'px', 'pix', 1, 200, 5);
+//Generate widths & heights
+@include setSizes($wPercentages);
+@include setSizes($wPixels);
+@include setSizes($hPercentages);
+@include setSizes($hPixels);
 
 //Generate radius
-$lgR: 10,20,40; //lg devices
-$smR: 5,10,20;//sm devices
-
-@include radius($lgR, $smR);
+@include setRadius($lgRadius, $smRadius);

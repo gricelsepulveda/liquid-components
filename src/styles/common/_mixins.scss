@@ -1,0 +1,42 @@
+//Sizes
+@mixin setSizes($prop, $propAlias, $unit, $unitAlias, $min, $max, $increment){
+    @for $i from $min through $max {
+        .lq-#{$propAlias}-#{$i * $increment}#{$unitAlias}{ 
+            #{$prop}: #{$i * $increment}#{$unit};
+            min-#{$prop}: #{$i * $increment}#{$unit};
+            max-#{$prop}: #{$i * $increment}#{$unit};
+        }
+    }
+}
+
+//Radius
+@mixin setRadius($lgRadius, $smRadius, $unit){
+    @each $lgRadiusVal in $lgRadius {
+        $lgRadiusAlias:index($lgRadius, $lgRadiusVal);
+        $smRadiusVal:nth($smRadius, $lgRadiusAlias);
+        .lq-radius-#{$lgRadiusAlias}{ 
+            border-radius: #{$lgRadiusVal}#{$unit};
+            @media #{$sm}{
+                border-radius: #{$smRadiusVal}#{$unit};
+            }
+        }
+    }
+}
+
+//Paddings & margins
+@mixin setSpace($prop, $lgVal, $smVal, $unit, $direction){
+    @if $direction {
+        $getDirection: -#{$direction};
+    } @else {
+        $getDirection: '';
+    }
+    .lq-#{$prop}-#{$direction}{
+        #{$prop}#{$direction}: #{$lgVal}#{$unit};
+        @media #{$sm}{
+            #{$prop}#{$direction}: #{$smVal}#{$unit};
+        }
+    }
+}
+
+@include setSpace('padding', 20, 10, 'px', $direction: false);
+@include setSpace('padding', 20, 10, 'px', 'right');
